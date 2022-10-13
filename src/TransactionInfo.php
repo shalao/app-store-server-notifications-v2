@@ -302,4 +302,9 @@ final class TransactionInfo
     {
         return $this->webOrderLineItemId;
     }
+
+    public function toArray(): array
+    {
+        return get_object_vars($this);
+    }
 }
