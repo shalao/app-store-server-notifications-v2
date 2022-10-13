@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Readdle\AppStoreServerNotificationsV2;
 
-use Carbon\Carbon;
-
 final class RenewalInfo
 {
     /**
@@ -191,9 +189,9 @@ final class RenewalInfo
         return $this->expirationIntent;
     }
 
-    public function getGracePeriodExpiresDate(): Carbon
+    public function getGracePeriodExpiresDate(): int
     {
-        return Carbon::createFromTimestampMs($this->gracePeriodExpiresDate);
+        return $this->gracePeriodExpiresDate;
     }
 
     public function getIsInBillingRetryPeriod(): bool
@@ -226,13 +224,13 @@ final class RenewalInfo
         return $this->productId;
     }
 
-    public function getRecentSubscriptionStartDate(): Carbon
+    public function getRecentSubscriptionStartDate(): int
     {
-        return Carbon::createFromTimestampMs($this->recentSubscriptionStartDate);
+        return $this->recentSubscriptionStartDate;
     }
 
-    public function getSignedDate(): Carbon
+    public function getSignedDate(): int
     {
-        return Carbon::createFromTimestampMs($this->signedDate);
+        return $this->signedDate;
     }
 }

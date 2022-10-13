@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Readdle\AppStoreServerNotificationsV2;
 
-use Carbon\Carbon;
-
 final class TransactionInfo
 {
     /**
@@ -220,9 +218,9 @@ final class TransactionInfo
         return $this->environment;
     }
 
-    public function getExpiresDate(): Carbon
+    public function getExpiresDate(): int
     {
-        return Carbon::createFromTimestampMs($this->expiresDate);
+        return $this->expiresDate;
     }
 
     public function getInAppOwnershipType(): string
@@ -245,9 +243,9 @@ final class TransactionInfo
         return $this->offerType;
     }
 
-    public function getOriginalPurchaseDate(): Carbon
+    public function getOriginalPurchaseDate(): int
     {
-        return Carbon::createFromTimestampMs($this->originalPurchaseDate);
+        return $this->originalPurchaseDate;
     }
 
     public function getOriginalTransactionId(): string
@@ -260,9 +258,9 @@ final class TransactionInfo
         return $this->productId;
     }
 
-    public function getPurchaseDate(): Carbon
+    public function getPurchaseDate(): int
     {
-        return Carbon::createFromTimestampMs($this->purchaseDate);
+        return $this->purchaseDate;
     }
 
     public function getQuantity(): int
@@ -270,9 +268,9 @@ final class TransactionInfo
         return $this->quantity;
     }
 
-    public function getRevocationDate(): Carbon
+    public function getRevocationDate(): int
     {
-        return Carbon::createFromTimestampMs($this->revocationDate);
+        return $this->revocationDate;
     }
 
     public function getRevocationReason(): int
@@ -280,9 +278,9 @@ final class TransactionInfo
         return $this->revocationReason;
     }
 
-    public function getSignedDate(): Carbon
+    public function getSignedDate(): int
     {
-        return Carbon::createFromTimestampMs($this->signedDate);
+        return $this->signedDate;
     }
 
     public function getSubscriptionGroupIdentifier(): string

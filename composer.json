@@ -13,7 +13,6 @@
 	"require": {
 		"ext-json": "*",
 		"ext-openssl": "*",
-		"web-token/jwt-framework": ">=2.2",
-		"nesbot/carbon": ">=2.35.0"
+		"web-token/jwt-framework": ">=2.2"
 	}
 }

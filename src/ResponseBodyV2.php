@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Readdle\AppStoreServerNotificationsV2;
 
-use Carbon\Carbon;
 use Readdle\AppStoreServerNotificationsV2\Exception\AppStoreServerNotificationException;
 
 final class ResponseBodyV2
@@ -307,8 +306,8 @@ final class ResponseBodyV2
         return $this->version;
     }
 
-    public function getSignedDate(): Carbon
+    public function getSignedDate(): int
     {
-        return Carbon::createFromTimestampMs($this->signedDate);
+        return $this->signedDate;
     }
 }
