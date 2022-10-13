@@ -6,6 +6,16 @@ namespace Readdle\AppStoreServerNotificationsV2;
 final class AppMetadata
 {
     /**
+     * Indicates that the notification applies to testing in the sandbox environment.
+     */
+    public const ENVIRONMENT__SANDBOX = 'Sandbox';
+
+    /**
+     * Indicates that the notification applies to the production environment.
+     */
+    public const ENVIRONMENT__PRODUCTION = 'Production';
+
+    /**
      * The unique identifier of the app that the notification applies to.
      * This property is available for apps that are downloaded from the App Store; it isn’t present in the sandbox environment.
      */

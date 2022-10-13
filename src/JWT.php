@@ -18,6 +18,7 @@ final class JWT
 {
     const HEADER_ALG = 'alg';
     const HEADER_X5C = 'x5c';
+    const SIGNATURE_INDEX = 0;
 
     const REQUIRED_JWS_HEADERS = [
         self::HEADER_ALG,
@@ -77,7 +78,11 @@ final class JWT
         $tokenTypes = [new JWSTokenSupport()];
 
         try {
-            (new HeaderCheckerManager($checkers, $tokenTypes))->check($this->jws, 0, self::REQUIRED_JWS_HEADERS);
+            (new HeaderCheckerManager($checkers, $tokenTypes))->check(
+                $this->jws,
+                self::SIGNATURE_INDEX,
+                self::REQUIRED_JWS_HEADERS
+            );
         } catch (Exception $e) {
             throw new AppStoreServerNotificationException('JWT headers error: ' . $e->getMessage());
         }
@@ -88,7 +93,7 @@ final class JWT
      */
     private function extractAndVerifyX509Chain(): void
     {
-        $rawChain = $this->jws->getSignature(0)->getProtectedHeaderParameter('x5c');
+        $rawChain = $this->jws->getSignature(self::SIGNATURE_INDEX)->getProtectedHeaderParameter(self::HEADER_X5C);
         $chain = [
             'certificate' => CertificateManager::formatPemCertificate(trim($rawChain[0])),
             'intermediate' => CertificateManager::formatPemCertificate(trim($rawChain[1])),
@@ -119,7 +124,9 @@ final class JWT
         $jwk = JWKFactory::createFromCertificate($this->x509Chain['certificate']);
 
         try {
-            $verified = (new JWSVerifier(new AlgorithmManager([new $algClass])))->verifyWithKey($this->jws, $jwk, 0);
+            $verified = (new JWSVerifier(
+                new AlgorithmManager([new $algClass()])
+            ))->verifyWithKey($this->jws, $jwk, self::SIGNATURE_INDEX);
         } catch (Exception $e) {
             throw new AppStoreServerNotificationException('JWT signature error: ' . $e->getMessage());
         }
@@ -134,8 +141,8 @@ final class JWT
      */
     private static function getAlgClass(JWS $jws): string
     {
-        $alg = $jws->getSignature(0)->getProtectedHeaderParameter('alg');
-        $algClass = 'Jose\Component\Signature\Algorithm\\' . $alg;
+        $alg = $jws->getSignature(0)->getProtectedHeaderParameter(self::HEADER_ALG);
+        $algClass = "Jose\Component\Signature\Algorithm\\$alg";
 
         if (!class_exists($algClass)) {
             throw new AppStoreServerNotificationException("JWT parsing error: unknown algorithm \"$alg\"");
