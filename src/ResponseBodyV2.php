@@ -251,18 +251,14 @@ final class ResponseBodyV2
         )->parseAndVerify();
 
         if (!empty($payload['data']['signedRenewalInfo'])) {
-            $payload['data']['renewalInfo'] = (new JWT(
-                $payload['data']['signedRenewalInfo'],
-                $rootCertificate)
-            )->parseAndVerify();
+            $renewalInfo = (new JWT($payload['data']['signedRenewalInfo'], $rootCertificate))->parseAndVerify();
+            $payload['data']['renewalInfo'] = RenewalInfo::createFromPayload($renewalInfo);
             unset($payload['data']['signedRenewalInfo']);
         }
 
         if (!empty($payload['data']['signedTransactionInfo'])) {
-            $payload['data']['transactionInfo'] = (new JWT(
-                $payload['data']['signedTransactionInfo'],
-                $rootCertificate)
-            )->parseAndVerify();
+            $transactionInfo = (new JWT($payload['data']['signedTransactionInfo'], $rootCertificate))->parseAndVerify();
+            $payload['data']['transactionInfo'] = TransactionInfo::createFromPayload($transactionInfo);
             unset($payload['data']['signedTransactionInfo']);
         }
 
