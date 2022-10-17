@@ -1,5 +1,5 @@
 {
-	"name": "readdle/app-store-server-notifications-v2",
+	"name": "shalao/app-store-server-notifications-v2",
 	"description": "This library allows to interact with App Store Server Notifications Version 2",
 	"type": "library",
 	"license": "MIT",
